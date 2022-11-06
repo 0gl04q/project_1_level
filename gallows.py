@@ -8,7 +8,8 @@ def form():
         [sg.Text('Виселица', justification='center', font=("Verdana", 20, "bold"))],
         [sg.Text('Слово: ', font=("Verdana", 8)), sg.Text(key='word')],
         [sg.Text('Ошибки: (0)', key='mis', font=("Verdana", 8)), sg.Text(key='mistake')],
-        [sg.Text('Буква: ', font=("Verdana", 8)), sg.Input(key='letter', size=(25, 1))],
+        [sg.Text('Буква: ', font=("Verdana", 8)), sg.Input(key='letter', size=(2, 1))],
+        [sg.Output(size=(88, 6), key='out')],
         [sg.Button('Проверка буквы'), sg.Button('Новое слово')]
     ]
 
@@ -27,17 +28,18 @@ def form():
     while True:
         event, values = window.read()
         if event == 'Новое слово':  # Обработка нажатия кнопки "Новое слово"
-            och(window)
+            och(window)  # Очистка интерфейса
+            window.Element('out').Update('')  # Очистка вывода
             # Очистка переменных
             mis_list = []  # Список ошибок
-
             # Получение слова и подчеркиваний
             sp = new_word()
             word_game = sp[1]
             word_with_underline = sp[0]
             # Отображение подчеркиваний
             window.Element('word').Update(word_with_underline)
-
+            print('Новое слово!\n\nПопробуй угадай! У тебя 6 попыток.')
+            print(word_game)
         # Обработка нажатия кнопки "Проверка буквы"
         if event == 'Проверка буквы' and word_game != '' and values['letter'] != '':
             # Создание списка с "подчеркиваниями" и проверкой на ошибку
@@ -54,11 +56,22 @@ def form():
                 window.Element('mis').Update(f'Ошибки: ({len(mis_list)})')
                 window.Element('mistake').Update(', '.join(mis_list))
                 if len(mis_list) >= 6:
+                    print(f'\nТы проиграл... Слово {word_game}')
                     och(window)  # Очистка интерфейса
                     # Очистка переменных
                     word_game = ''  # Игровое слово
                     word_with_underline = ''  # Визуализация подчеркивания
                     mis_list = []  # Список ошибок
+
+            # Обработка победы
+            if word_with_underline.find('_') == -1:
+                och(window)  # Очистка интерфейса
+                window.Element('out').Update('')  # Очистка вывода
+                print('Вы победили!!!')
+                # Очистка переменных
+                word_game = ''  # Игровое слово
+                word_with_underline = ''  # Визуализация подчеркивания
+                mis_list = []  # Список ошибок
 
         if event in (None, 'Exit', 'Отмена'):  # Выход из цикла
             break  # Закрытие программы
