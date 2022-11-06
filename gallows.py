@@ -39,7 +39,7 @@ def form():
             # Отображение подчеркиваний
             window.Element('word').Update(word_with_underline)
             print('Новое слово!\n\nПопробуй угадай! У тебя 6 попыток.')
-            print(word_game)
+            
         # Обработка нажатия кнопки "Проверка буквы"
         if event == 'Проверка буквы' and word_game != '' and values['letter'] != '':
             # Создание списка с "подчеркиваниями" и проверкой на ошибку
