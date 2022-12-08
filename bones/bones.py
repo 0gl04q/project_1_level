@@ -1,5 +1,7 @@
 import random
 
+list_gamers = []
+
 
 def random_generator_qube(count):
     for i in range(count):
@@ -54,9 +56,39 @@ def roll_cube(count):
     return qube_list, all_sum_points
 
 
+def minimum(roll, sum_all_rol):
+    minn = [50, 450, 950]
+    if roll >= minn[0]:
+        return roll, minn[0]
+
+
+def add_player():
+    return Gamers(input('Введите имя игрока: '))
+
+
+class Gamers:
+    def __init__(self, nm):
+        self.name = nm
+        self.point = 0
+
+    def add_point(self, pn):
+        self.point += pn
+
+    def display_info(self):
+        print(f"Имя: {self.name}\nКоличество очков: {self.point}")
+
+
 if __name__ == '__main__':
-    cube_count = 5
-    print(roll_cube(cube_count))
+    # инициализация
+    print(1)
+
+
+
+
+
+
+
+
 
 
 # amount = input('Введите количество игроков: ')
